@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TestBorad",
+            "request": "launch",
+            "mainClass": "TestBorad"
+        }
+    ]
+}

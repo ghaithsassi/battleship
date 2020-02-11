@@ -15,6 +15,11 @@ class Board{
     String getName(){
         return this.name;
     }
+    /**
+     *  constructor of class Board
+     * @param name the name of the Board
+     * @param size the size of the Board
+     */
     Board(String name,int size){
         this.name = name;
         setSize(size);
@@ -23,24 +28,42 @@ class Board{
         ships = new Character[size][size];
         hits = new boolean[size][size];  
     }
+    /**
+     * constructor - Default size is 10
+     * @param name the name of the Board
+     */
     Board(String name){
         this(name,10);
     }
-    public void print(){
-    
-    int n = getSize();
-    System.out.println("ships:");
-    int counter = 0;
-    String coloumName = "";
-    char alphabet = 'A';
-    while(counter<=n){
-        System.out.print(coloumName);
-        System.out.print('\t');
-        coloumName = ""+alphabet;
-        alphabet++;
-        counter++;
+    /**
+     * display the coloum name above the Board
+     * @param nbrsColoum the total number of coloums
+     */
+    private void printColoumName(int nbrsColoum){
+  
+        int counter = 0;
+        String coloumName = "";
+        String tmp; 
+
+        char alphabet = 'A';
+        while(counter<=nbrsColoum){
+            System.out.print(coloumName);
+            System.out.print('\t');
+            tmp = nbrsColoum > 26 ? String.valueOf( (counter / 26)+1 ): "";
+            coloumName = alphabet+tmp;
+            alphabet = (alphabet == 'Z' ? 'A':++alphabet);
+            ++counter;
+        }
     }
 
+    /**
+     * display the boards containning the ships and the hits
+     */
+    public void print(){
+    int n = getSize();
+    System.out.println("ships:");
+    printColoumName(n);
+    
     System.out.print('\n');
         for(int i = 0;i<n;i++){
             System.out.print(i+1);
@@ -59,17 +82,7 @@ class Board{
 
 
     System.out.println("hits:");
-    
-    counter = 0;
-    coloumName = "";
-    alphabet = 'A';
-    while(counter<=n){
-        System.out.print(coloumName);
-        System.out.print('\t');
-        coloumName = ""+alphabet;
-        alphabet++;
-        counter++;
-    }
+    printColoumName(n);
     System.out.print('\n');
 
         for(int i = 0;i<n;i++){
