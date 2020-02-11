@@ -12,31 +12,31 @@ public class TestShips {
         AbstractShip D = new Destroyer();
         AbstractShip S = new Submarine();
 
-        assertEquals(B.toString(),"B");
-        assertEquals(B.getName(),"Battleship");
+        assertEquals(B,"B.toString()");
+        assertEquals("Battleship",B.getName());
         Integer BattleshipSize = 4;
-        assertEquals(B.getSize(), BattleshipSize);
-        assertEquals(B.getOrientation(), Orientation.EAST);
+        assertEquals( BattleshipSize,B.getSize());
+        assertEquals(Orientation.EAST,B.getOrientation() );
 
 
-        assertEquals(C.toString(),"C");
-        assertEquals(C.getName(),"Carrier");
+        assertEquals("C",C.toString());
+        assertEquals("Carrier",C.getName());
         Integer CarrierSize = 5;
-        assertEquals(C.getSize(), CarrierSize);
-        assertEquals(C.getOrientation(), Orientation.EAST);
+        assertEquals(CarrierSize,C.getSize() );
+        assertEquals(Orientation.EAST,C.getOrientation());
 
 
-        assertEquals(D.toString(),"D");
-        assertEquals(D.getName(),"Destroyer");
+        assertEquals("D",D.toString());
+        assertEquals("Destroyer",D.getName());
         Integer DestroyerSize = 2;
-        assertEquals(D.getSize(), DestroyerSize);
-        assertEquals(D.getOrientation(), Orientation.EAST);
+        assertEquals( DestroyerSize,D.getSize());
+        assertEquals(Orientation.EAST,D.getOrientation());
 
-        assertEquals(S.toString(),"S");
-        assertEquals(S.getName(),"Submarine");
+        assertEquals("S",S.toString());
+        assertEquals("Submarine",S.getName());
         Integer SubmarineSize = 3;
-        assertEquals(S.getSize(), SubmarineSize);
-        assertEquals(S.getOrientation(), Orientation.EAST);
+        assertEquals(SubmarineSize,S.getSize());
+        assertEquals(Orientation.EAST,S.getOrientation());
 
 
 

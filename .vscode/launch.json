@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - TestBorad",
+            "request": "launch",
+            "mainClass": "in205.game.TestBorad",
+            "projectName": "java"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - TestShips",
             "request": "launch",
             "mainClass": "TestShips"
