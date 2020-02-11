@@ -2,6 +2,18 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - TestShips",
+            "request": "launch",
+            "mainClass": "TestShips"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TestShips",
+            "request": "launch",
+            "mainClass": "test.java.in205.ships.TestShips"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - TestBorad",
             "request": "launch",
             "mainClass": "TestBorad"

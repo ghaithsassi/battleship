@@ -1,3 +1,5 @@
+package in205.game;
+
 class TestBorad {
     public static void main(String[] args) {
         String name = "hello";

@@ -1,4 +1,6 @@
-class Board{
+package in205.game;
+
+class Board {
     private String name;
     private int size;
     private Character[][] ships;
