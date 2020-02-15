@@ -21,7 +21,7 @@ public abstract class AbstractShip{
     public String getName(){
         return this.name;
     } 
-    void setOrientation(final Orientation orientation){
+    public void setOrientation(final Orientation orientation){
         this.orientation = orientation;
     }
     public Orientation getOrientation(){

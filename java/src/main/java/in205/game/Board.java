@@ -143,8 +143,12 @@ class Board implements IBoard {
                     if ((row + ship.getSize()) > size)
                         throw new outOfBoardException();
                     for(int i =0 ; i<ship.getSize();i++){
-                        if(hasShip(row+i, col))
+                        if(hasShip(row+i, col)){
+                            for(int j=i-1;j>=0;--j){
+                                this.ships[(row + j)][col] = null;
+                            }
                             throw new shipsOverlapException();
+                        }  
                         this.ships[(row + i)][col] = ship.getLabel();
                     }
                     break;
@@ -152,8 +156,12 @@ class Board implements IBoard {
                     if ((row - ship.getSize()+1) < 0)
                         throw new outOfBoardException();
                     for(int i =0 ; i<ship.getSize();i++){
-                        if(hasShip(row-i, col))
+                        if(hasShip(row-i, col)){
+                            for(int j = i-1;j>=0;--j){
+                                this.ships[(row - j)][col] = null;
+                            }
                             throw new shipsOverlapException();
+                        }
                         this.ships[(row - i)][col] = ship.getLabel();
                     }
                     break;
@@ -161,8 +169,13 @@ class Board implements IBoard {
                     if ((col + ship.getSize()) > size)
                         throw new outOfBoardException();
                     for(int i =0 ; i<ship.getSize();i++){
-                        if(hasShip(row, col+i))
+                        if(hasShip(row, col+i)){
+                            for(int j=i-1;j>=0;--j){
+                                this.ships[row ][(col + j) ] = null;
+                            }
                             throw new shipsOverlapException();
+                        }
+                            
                         this.ships[row ][(col + i) ] = ship.getLabel();
                     }
                     break;
@@ -170,8 +183,13 @@ class Board implements IBoard {
                     if ((col - ship.getSize()+1) < 0)
                         throw new outOfBoardException();
                     for(int i =0 ; i<ship.getSize();i++){
-                        if(hasShip(row, col-i))
+                        if(hasShip(row, col-i)){
+                            for(int j = i-1;j>=0;--j){
+                                this.ships[row ][(col - j) ] = null;
+                            }
                             throw new shipsOverlapException();
+                        }
+                            
                         this.ships[row ][(col - i) ] = ship.getLabel();
                     }
                     break;
