@@ -127,6 +127,7 @@ class Board implements IBoard {
      * @param ship a ship 
      * @param row the row position, integer between 0 and (sizeof the board -1)
      * @param col the coloum position, integer between 0 and (sizeof the board -1)
+     * @throws outOfBoardException,orientaionException,shipsOverlapException
      */
     public void putShip(AbstractShip ship, int row, int col) throws outOfBoardException,orientaionException,shipsOverlapException {
         if (row >= size || row < 0 || col >= size || col < 0)
@@ -200,6 +201,7 @@ class Board implements IBoard {
      * @param row
      * @param col
      * @return flase if there is no ship in position (row,col) otherwise true 
+     * @throws outOfBoardException
      */
     public boolean hasShip(int row, int col) throws outOfBoardException{
         if (row >= size || row < 0 || col >= size || col < 0)
@@ -224,6 +226,7 @@ class Board implements IBoard {
      * @param row the row position, integer between 0 and (sizeof the board -1)
      * @param col the coloum position, integer between 0 and (sizeof the board -1)
      * @return Boolean null if there is no hit,false if there is a miss,true if there is a strike
+     * @throws outOfBoardException
      */
     public Boolean getHit(int row, int col)throws outOfBoardException {
         if (row >= size || row < 0 || col >= size || col < 0)
@@ -235,10 +238,32 @@ class Board implements IBoard {
      * this getter only used in testing
      * @param row
      * @param col
-     * @return
+     * @return the Shipstate object
      */
     ShipState getShipState(int row,int col){
         return this.ships[row][col];
+    }
+
+
+    /**
+     * try to hit a ship at given position
+     * 
+     * @param row the row position, integer between 0 and (sizeof the board -1)
+     * @param col the coloum position, integer between 0 and (sizeof the board -1)
+     * @return Hit an object indicate the status of the hit
+     * @throws doubleStrikeException,outOfBoardException
+     */
+    public Hit sendHit(int row, int col) throws outOfBoardException, doubleStrikeException {
+        if(this.hasShip(row, col)){
+            this.ships[row][col].addStrike();
+            if(this.ships[row][col].isSunk()){
+                return Hit.fromInt(this.ships[row][col].getShip().getSize());
+            }else{
+                return Hit.STIKE;
+            }
+        }else{
+            return Hit.MISS;
+        }
     }
 
 }

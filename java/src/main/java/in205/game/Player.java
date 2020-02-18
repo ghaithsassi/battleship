@@ -37,7 +37,7 @@ public class Player {
      * @throws orientaionException
      * @throws outOfBoardException
      */
-    public void putShips(){
+    public void putShips() {
         boolean done = false;
         int i = 0;
 
@@ -46,34 +46,34 @@ public class Player {
             String msg = String.format("placer %d : %s(%d)", i + 1, s.getName(), s.getSize());
             System.out.println(msg);
             InputHelper.ShipInput res = InputHelper.readShipInput();
-            
-            //set ship orientation
+
+            // set ship orientation
             Orientation myOrientation;
-            switch(res.orientation){
-                case "n":
-                    myOrientation = Orientation.NORTH;
-                    break;
-                case "s":
-                    myOrientation = Orientation.SOUTH;
-                    break;
-                case "e":
-                    myOrientation = Orientation.EAST;
-                    break;
-                default:
-                    myOrientation = Orientation.WEST;
-                    break;
+            switch (res.orientation) {
+            case "n":
+                myOrientation = Orientation.NORTH;
+                break;
+            case "s":
+                myOrientation = Orientation.SOUTH;
+                break;
+            case "e":
+                myOrientation = Orientation.EAST;
+                break;
+            default:
+                myOrientation = Orientation.WEST;
+                break;
             }
             s.setOrientation(myOrientation);
 
-            //put ship at given position
+            // put ship at given position
             try {
                 board.putShip(s, res.y, res.x);
             } catch (outOfBoardException | orientaionException | shipsOverlapException e) {
-                //e.printStackTrace();
+                // e.printStackTrace();
                 --i;
             }
 
-            //when ship placement successful
+            // when ship placement successful
             ++i;
             done = i == 5;
 
@@ -86,14 +86,28 @@ public class Player {
         Hit hit = null;
 
         do {
-            System.out.println("où frapper?");
+            System.out.println("where to hit?");
             InputHelper.CoordInput hitInput = InputHelper.readCoordInput();
-            // TODO call sendHit on this.opponentBoard
+            //call sendHit on this.opponentBoard
+            try {
+                hit = this.opponentBoard.sendHit(hitInput.y, hitInput.x);
+                done = true;
+                System.out.println(hit);
+                if(hit==Hit.MISS){
+                    this.board.setHit(false,hitInput.y,hitInput.x);
+                }else{
+                    this.board.setHit(true, hitInput.y, hitInput.x);
+                }
+            } catch (outOfBoardException | doubleStrikeException e) {
+                done = false;
+            }
 
-            // TODO : Game expects sendHit to return BOTH hit result & hit coords.
+            //Game expects sendHit to return BOTH hit result & hit coords.
+            coords = new int[2];
+            coords[0] = hitInput.y;
+            coords[1] = hitInput.x;
             // return hit is obvious. But how to return coords at the same time ?
         } while (!done);
-
         return hit;
     }
 
