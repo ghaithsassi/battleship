@@ -14,13 +14,14 @@ public class ShipState {
     void addStrike()throws doubleStrikeException{
         /* check if there is already a strike */
         if(!this.struck){
+            ship.addStrike();
             this.struck = true;
         }else{
             throw new doubleStrikeException();
         }
         
     }
-    
+
     public boolean isStruck(){
         return this.struck;
     }
