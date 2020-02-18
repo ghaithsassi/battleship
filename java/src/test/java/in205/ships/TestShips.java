@@ -12,7 +12,7 @@ public class TestShips {
         AbstractShip D = new Destroyer();
         AbstractShip S = new Submarine();
 
-        assertEquals(B,"B.toString()");
+        assertEquals("B",B.toString());
         assertEquals("Battleship",B.getName());
         Integer BattleshipSize = 4;
         assertEquals( BattleshipSize,B.getSize());
@@ -39,6 +39,16 @@ public class TestShips {
         assertEquals(Orientation.EAST,S.getOrientation());
 
 
+
+    }
+    @Test
+    public void testStrikes(){
+        AbstractShip D = new Destroyer();
+        assertEquals(false, D.isSunk());
+        D.addStrike();
+        assertEquals(false, D.isSunk());
+        D.addStrike();
+        assertEquals(true, D.isSunk());
 
     }
     

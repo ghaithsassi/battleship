@@ -6,8 +6,8 @@ import in205.ships.*;
 class Board implements IBoard {
     private String name;
     private int size;
-    private Character[][] ships;
-    private boolean[][] hits;
+    private ShipState[][] ships;
+    private Boolean[][] hits;
 
     void setSize(int n) {
         this.size = n;
@@ -24,15 +24,7 @@ class Board implements IBoard {
     String getName() {
         return this.name;
     }
-
-    /**
-     * just for testing must be deleted later
-     * @return the ships
-     */
-    public Character[][] getShips(){
-        return this.ships;
-    }
-    public boolean[][] getHit(){
+    public Boolean[][] getHit(){
         return this.hits.clone();
     }
 
@@ -47,8 +39,8 @@ class Board implements IBoard {
         setSize(size);
 
         size = getSize();
-        ships = new Character[size][size];
-        hits = new boolean[size][size];
+        ships = new ShipState[size][size];
+        hits = new Boolean[size][size];
     }
 
     /**
@@ -114,10 +106,12 @@ class Board implements IBoard {
             System.out.print(i + 1);
             System.out.print('\t');
             for (int j = 0; j < n; j++) {
-                if (hits[i][j] == false) {
+                if (hits[i][j] == null) {
                     System.out.print('.');
-                } else {
-                    System.out.print('x');
+                } else if(hits[i][j] ==  false ){
+                    System.out.print(ColorUtil.colorize("X",ColorUtil.Color.WHITE));
+                }else{
+                    System.out.print(ColorUtil.colorize("X",ColorUtil.Color.RED));
                 }
                 System.out.print('\t');
             }
@@ -137,7 +131,6 @@ class Board implements IBoard {
     public void putShip(AbstractShip ship, int row, int col) throws outOfBoardException,orientaionException,shipsOverlapException {
         if (row >= size || row < 0 || col >= size || col < 0)
             throw new outOfBoardException();
-
         switch (ship.getOrientation()){
                 case SOUTH:
                     if ((row + ship.getSize()) > size)
@@ -148,8 +141,9 @@ class Board implements IBoard {
                                 this.ships[(row + j)][col] = null;
                             }
                             throw new shipsOverlapException();
-                        }  
-                        this.ships[(row + i)][col] = ship.getLabel();
+                        }
+                        ShipState myShipstate = new ShipState(ship); 
+                        this.ships[(row + i)][col] = myShipstate;
                     }
                     break;
                 case NORTH:
@@ -162,7 +156,8 @@ class Board implements IBoard {
                             }
                             throw new shipsOverlapException();
                         }
-                        this.ships[(row - i)][col] = ship.getLabel();
+                        ShipState myShipstate = new ShipState(ship);
+                        this.ships[(row - i)][col] = myShipstate;
                     }
                     break;
                 case EAST:
@@ -175,8 +170,8 @@ class Board implements IBoard {
                             }
                             throw new shipsOverlapException();
                         }
-                            
-                        this.ships[row ][(col + i) ] = ship.getLabel();
+                        ShipState myShipstate = new ShipState(ship);
+                        this.ships[row ][(col + i) ] = myShipstate;
                     }
                     break;
                 case WEST:
@@ -189,8 +184,8 @@ class Board implements IBoard {
                             }
                             throw new shipsOverlapException();
                         }
-                            
-                        this.ships[row ][(col - i) ] = ship.getLabel();
+                        ShipState myShipstate = new ShipState(ship);
+                        this.ships[row ][(col - i) ] = myShipstate;
                     }
                     break;
                 default:
@@ -203,7 +198,6 @@ class Board implements IBoard {
     public boolean hasShip(int row, int col) throws outOfBoardException{
         if (row >= size || row < 0 || col >= size || col < 0)
             throw new outOfBoardException();
-
         return this.ships[row][col] != null;
     }
 
@@ -217,5 +211,8 @@ class Board implements IBoard {
         if (row >= size || row < 0 || col >= size || col < 0)
             throw new outOfBoardException();
         return this.hits[row][col];
+    }
+    ShipState getShipState(int row,int col){
+        return this.ships[row][col];
     }
 }
