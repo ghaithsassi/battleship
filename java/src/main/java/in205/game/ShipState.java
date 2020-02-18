@@ -7,20 +7,20 @@ import in205.ships.*;
 public class ShipState {
     private AbstractShip ship;
     private boolean struck = false;
-    private Integer addStrikeCallCounter = 0;
     ShipState(){}
     ShipState(AbstractShip aShip){
         this.ship = aShip;
     }
     void addStrike()throws doubleStrikeException{
-        if(this.addStrikeCallCounter < 1){
+        /* check if there is already a strike */
+        if(!this.struck){
             this.struck = true;
-            ++(this.addStrikeCallCounter);
         }else{
             throw new doubleStrikeException();
         }
         
     }
+    
     public boolean isStruck(){
         return this.struck;
     }

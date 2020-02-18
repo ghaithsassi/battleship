@@ -3,12 +3,12 @@ package in205.game;
 import java.util.NoSuchElementException;
 
 public enum Hit {
-    MISS(-1, "manqué"),
-    STIKE(-2, "touché"),
-    DESTROYER(2, "Frégate"),
-    SUBMARINE(3, "Sous-marin"),
-    BATTLESHIP(4, "Croiseur"),
-    CARRIER(5, "Porte-avion");
+    MISS(-1, "Miss"),
+    STIKE(-2, "Hit"),
+    DESTROYER(2, "Destroyer"),
+    SUBMARINE(3, "Submarine"),
+    BATTLESHIP(4, "Battleship"),
+    CARRIER(5, "Carrier");
 
     /* ***
      * Attributs

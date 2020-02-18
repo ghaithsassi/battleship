@@ -195,24 +195,50 @@ class Board implements IBoard {
 
     }
 
+    /**
+     * check if there is a ship in a given position
+     * @param row
+     * @param col
+     * @return flase if there is no ship in position (row,col) otherwise true 
+     */
     public boolean hasShip(int row, int col) throws outOfBoardException{
         if (row >= size || row < 0 || col >= size || col < 0)
             throw new outOfBoardException();
         return this.ships[row][col] != null;
     }
 
+    /**
+     * mark a hit
+     * @param hit boolean for hit or not
+     * @param row the row position, integer between 0 and (sizeof the board -1)
+     * @param col the coloum position, integer between 0 and (sizeof the board -1)
+     */
     public void setHit(boolean hit, int row, int col) throws outOfBoardException{
         if (row >= size || row < 0 || col >= size || col < 0)
             throw new outOfBoardException();
         this.hits[row][col] = hit;
     }
 
+    /**
+     * check if there is a hit in given position
+     * @param row the row position, integer between 0 and (sizeof the board -1)
+     * @param col the coloum position, integer between 0 and (sizeof the board -1)
+     * @return Boolean null if there is no hit,false if there is a miss,true if there is a strike
+     */
     public Boolean getHit(int row, int col)throws outOfBoardException {
         if (row >= size || row < 0 || col >= size || col < 0)
             throw new outOfBoardException();
         return this.hits[row][col];
     }
+
+    /**
+     * this getter only used in testing
+     * @param row
+     * @param col
+     * @return
+     */
     ShipState getShipState(int row,int col){
         return this.ships[row][col];
     }
+
 }

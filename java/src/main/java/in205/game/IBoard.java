@@ -40,4 +40,5 @@ public interface IBoard {
      * @return true if the hit is successful
      */
     Boolean getHit(int x, int y) throws Exception;
+
 }
