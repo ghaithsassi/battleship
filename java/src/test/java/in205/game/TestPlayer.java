@@ -37,11 +37,28 @@ public class TestPlayer {
         } catch (outOfBoardException | orientaionException | shipsOverlapException e) {
         }
 
+        Hit hit;
         p.putShips();
-        int[] coords={}; 
-        p.sendHit(coords);
-        p.sendHit(coords);
-        p.sendHit(coords);
+        int[] coords=new int[2]; 
+        
+        hit = p.sendHit(coords);
+        System.out.println(hit);
+        System.out.print(coords[0]);
+        System.out.print(" ");
+        System.out.println(coords[1]);
+
+        hit = p.sendHit(coords);
+        System.out.println(hit);
+        System.out.print(coords[0]);
+        System.out.print(" ");
+        System.out.println(coords[1]);
+
+        hit = p.sendHit(coords);
+        System.out.println(hit);
+        
+        System.out.print(coords[0]);
+        System.out.print(" ");
+        System.out.println(coords[1]);
 
 
         p.board.print();

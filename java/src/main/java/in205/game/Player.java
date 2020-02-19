@@ -92,18 +92,11 @@ public class Player {
             try {
                 hit = this.opponentBoard.sendHit(hitInput.y, hitInput.x);
                 done = true;
-                System.out.println(hit);
-                if(hit==Hit.MISS){
-                    this.board.setHit(false,hitInput.y,hitInput.x);
-                }else{
-                    this.board.setHit(true, hitInput.y, hitInput.x);
-                }
             } catch (outOfBoardException | doubleStrikeException e) {
                 done = false;
             }
 
             //Game expects sendHit to return BOTH hit result & hit coords.
-            coords = new int[2];
             coords[0] = hitInput.y;
             coords[1] = hitInput.x;
             // return hit is obvious. But how to return coords at the same time ?
@@ -114,7 +107,9 @@ public class Player {
     public AbstractShip[] getShips() {
         return ships;
     }
-
+    Board getBoard(){
+        return this.board;
+    }
     public void setShips(AbstractShip[] ships) {
         this.ships = ships;
     }
