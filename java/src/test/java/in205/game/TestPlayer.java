@@ -2,8 +2,6 @@ package in205.game;
 
 import java.util.ArrayList;
 
-import org.junit.Test;
-
 import in205.game.exceptions.orientaionException;
 import in205.game.exceptions.outOfBoardException;
 import in205.game.exceptions.shipsOverlapException;
@@ -13,6 +11,7 @@ import in205.ships.*;
  * TestPlayer
  */
 public class TestPlayer {
+
     public static void main(String[] args) {
         ArrayList<AbstractShip> myShips = new ArrayList<>();
 
