@@ -34,6 +34,14 @@ public abstract class AbstractShip{
     public Integer getSize(){
         return this.size;
     }
+    /**
+     * AbstractShip Constractor
+     * never used directely
+     * @param label
+     * @param name
+     * @param orientation
+     * @param size
+     */
     AbstractShip(Character label,String name,Orientation orientation,Integer size){
         setLabel(label);
         setName(name);
