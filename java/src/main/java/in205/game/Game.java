@@ -9,7 +9,6 @@ import in205.game.exceptions.outOfBoardException;
 import in205.ships.*;
 
 public class Game {
-
     /*
      * *** Constante
      */
@@ -18,44 +17,41 @@ public class Game {
     /*
      * *** Attributs
      */
-    private Player player1;
-    private Player player2;
-    private Scanner sin;
-
+    protected Player player1;
+    protected Player player2;
+    protected Scanner sin;
     /*
      * *** Constructeurs
      */
     public Game() {
     }
-
     public Game init() {
         if (!loadSave()) {
-            // init attributes
-            System.out.println("enter your name:");
-            // use a scanner to read player name
-            sin = new Scanner(System.in);
-            String playerName = sin.nextLine();
+                // init attributes
+                System.out.println("enter your name:");
+                // use a scanner to read player name
+                sin = new Scanner(System.in);
+                String playerName = sin.nextLine();
 
-            // init boards
-            Board b1, b2;
-            b1 = new Board(playerName);
-            b2 = new Board("AI");
+                // init boards
+                Board b1, b2;
+                b1 = new Board(playerName);
+                b2 = new Board("AI");
 
-            // init this.player1 & this.player2
-            List<AbstractShip> shipsPlayer1 = createDefaultShips();
-            player1 = new Player(b1, b2, shipsPlayer1);
+                // init this.player1 & this.player2
+                List<AbstractShip> shipsPlayer1 = createDefaultShips();
+                player1 = new Player(b1, b2, shipsPlayer1);
 
-            List<AbstractShip> shipsPlayer2 = createDefaultShips();
-            player2 = new AIPlayer(b2, b1, shipsPlayer2);
+                List<AbstractShip> shipsPlayer2 = createDefaultShips();
+                player2 = new AIPlayer(b2, b1, shipsPlayer2);
 
-            b1.print();
-            // place player ships
-            player1.putShips(); 
-            player2.putShips();
+                b1.print();
+                // place player ships
+                player1.putShips(); 
+                player2.putShips();
         }
         return this;
     }
-
     /*
      * *** Méthodes
      */
@@ -63,7 +59,6 @@ public class Game {
         int[] coords = new int[2];
         Board b1 = player1.getBoard();
         Hit hit;
-
         // main loop
         b1.print();
         boolean done;
@@ -102,11 +97,13 @@ public class Game {
         } while (!done);
 
         SAVE_FILE.delete();
-        System.out.println(String.format("joueur %d gagne", player1.lose ? 2 : 1));
+        System.out.println("player " + (player1.lose ? 2 : 1) +" (" +(player1.lose?player2.getBoard().getName():player1.getBoard().getName())+") " + " wins");
         sin.close();
     }
 
-    private void save() {
+
+
+    protected void save() {
 
         /*
         try {
@@ -123,7 +120,7 @@ public class Game {
         */
     }
 
-    private boolean loadSave() {
+    protected boolean loadSave() {
         /*
         if (SAVE_FILE.exists()) {
             try {
@@ -139,7 +136,7 @@ public class Game {
     
     }
 
-    private boolean updateScore() {
+    protected boolean updateScore() {
         for (Player player : new Player[] { player1, player2 }) {
             int destroyed = 0;
             for (AbstractShip ship : player.getShips()) {
@@ -157,7 +154,7 @@ public class Game {
         return false;
     }
 
-    private String makeHitMessage(boolean incoming, int[] coords, Hit hit) {
+    protected String makeHitMessage(boolean incoming, int[] coords, Hit hit) {
         String msg;
         ColorUtil.Color color = ColorUtil.Color.RESET;
         switch (hit) {
@@ -177,7 +174,7 @@ public class Game {
         return ColorUtil.colorize(msg, color);
     }
 
-    private static List<AbstractShip> createDefaultShips() {
+    protected static List<AbstractShip> createDefaultShips() {
         return Arrays.asList(new AbstractShip[] { new Destroyer(), new Submarine(), new Submarine(), new Battleship(),
                 new Carrier() });
     }

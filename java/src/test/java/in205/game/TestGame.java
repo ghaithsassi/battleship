@@ -1,5 +1,5 @@
 package in205.game;
-
+import java.util.Scanner;
 
 /**
  * TestGame
@@ -7,7 +7,32 @@ package in205.game;
 public class TestGame {
 
     public static void main(String[] args) {
-        Game game = new Game();
+        Game game;
+        Scanner sin = new Scanner(System.in);
+        System.out.println("welcome in Battleship game");
+        while(true){
+            try {
+                System.out.println("");
+                System.out.println("[1] single player");
+                System.out.println("[2] 2 player");
+                System.out.println("");
+                System.out.print("Select mode:");
+                String read =  sin.nextLine();
+                int playmode = Integer.parseInt(read);
+                if(playmode==1){
+                    game = new Game();
+                    break;
+                }else if(playmode == 2){
+                    game = new GameTwoPlayerMode();
+                    break;
+                }else{
+                    System.out.println("please choose a valid mode");
+                }
+            } catch (Exception e) {
+                System.out.println("please choose a valid mode");
+            }
+
+        }
         game.init();
         game.run();
 
