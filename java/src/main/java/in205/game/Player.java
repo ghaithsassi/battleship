@@ -6,13 +6,15 @@ import java.util.List;
 import in205.game.exceptions.*;
 import in205.ships.*;
 
-public class Player {
+public class Player implements Serializable{
+
+    private static final long serialVersionUID = 1L;
     /*
      * ** Attributs
      */
     protected Board board;
     protected Board opponentBoard;
-    protected int destroyedCount;
+    protected Integer destroyedCount;
     protected AbstractShip[] ships;
     protected boolean lose;
 

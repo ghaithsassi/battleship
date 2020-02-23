@@ -1,5 +1,6 @@
 package in205.game;
 
+import java.io.*;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,7 +10,11 @@ import in205.ships.*;
 /**
  * GameMode
  */
-public class GameTwoPlayerMode extends Game {
+public class GameTwoPlayerMode extends Game{
+    private static final long serialVersionUID = 1L;
+    private Boolean player1Turn;
+    protected transient Scanner sin;
+
     public GameTwoPlayerMode init() {
         if (!loadSave()) {
                 System.out.println("enter player 1 name:");
@@ -41,6 +46,16 @@ public class GameTwoPlayerMode extends Game {
                 System.out.println(b2.getName()+" place your ships");
                 player2.putShips();
                 System.out.print("\033[H\033[2J");
+            }else{
+                if (SAVE_FILE.exists()) {
+                    try {
+                        ObjectInputStream ois =  new ObjectInputStream(new FileInputStream(SAVE_FILE));
+                        this.sin = new Scanner(System.in);
+                        return  (GameTwoPlayerMode) ois.readObject();
+                    } catch (IOException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         return this;
     }
@@ -53,41 +68,39 @@ public class GameTwoPlayerMode extends Game {
         Hit hitPlayer2=null;
         
         boolean done;
+        boolean strike = false;
         do {
-            if(hitPlayer1==Hit.MISS || hitPlayer1==null){
-                System.out.println(b1.getName()+" are you ready?");
-                try {
-                    sin.nextLine();
-                } catch (Exception e) {
+            if(player1Turn){
+                if(hitPlayer1==Hit.MISS || hitPlayer1==null){
+                    System.out.println(b1.getName()+" are you ready?");
+                    InputHelper.readConfirm();
                 }
+                b1.print();
+                //display incomming hits for player 1
+                if(hitPlayer2!=null && (hitPlayer1==Hit.MISS||hitPlayer1==null)){
+                    System.out.println(makeHitMessage(true /* incoming hit */, coords, hitPlayer2));
+                }
+                hitPlayer1 = player1.sendHit(coords); // player1 send a hit
+                strike = hitPlayer1 != Hit.MISS; // set this hit on his board (b1)
+                try {
+                    b1.setHit(strike, coords[0], coords[1]);
+                } catch (outOfBoardException e) {
+                    e.printStackTrace();
+                }
+                b1.print();
+                System.out.println(makeHitMessage(false /* outgoing hit */, coords, hitPlayer1));
+                save();
             }
-            b1.print();
-            //display incomming hits for player 1
-            if(hitPlayer2!=null && (hitPlayer1==Hit.MISS||hitPlayer1==null)){
-                System.out.println(makeHitMessage(true /* incoming hit */, coords, hitPlayer2));
-            }
-            hitPlayer1 = player1.sendHit(coords); // player1 send a hit
-            boolean strike = hitPlayer1 != Hit.MISS; // set this hit on his board (b1)
-            try {
-                b1.setHit(strike, coords[0], coords[1]);
-            } catch (outOfBoardException e) {
-                e.printStackTrace();
-            }
-
             done = updateScore();
-            b1.print();
-            System.out.println(makeHitMessage(false /* outgoing hit */, coords, hitPlayer1));
-            save();
+
 
             if (!done && !strike) {
-                try {
-                    System.out.print(b1.getName()+" press enter:");
-                    sin.nextLine();
-                    System.out.print("\033[H\033[2J");
-                    System.out.println(b2.getName()+" are you ready?");
-                    sin.nextLine();
-                } catch (Exception e) {
-                }
+                System.out.print(b1.getName()+" press enter:");
+                player1Turn = false;
+                InputHelper.readConfirm();
+                System.out.print("\033[H\033[2J");
+                System.out.println(b2.getName()+" are you ready?");
+                InputHelper.readConfirm();
                 do {
                     b2.print();
                     if(hitPlayer1!=null && (hitPlayer2==Hit.MISS||hitPlayer2==null)){
@@ -109,11 +122,10 @@ public class GameTwoPlayerMode extends Game {
                 } while (strike && !done);
                 if(!done){
                     System.out.print(b2.getName()+" press enter:");
-                    try {
-                        sin.nextLine();
-                        System.out.print("\033[H\033[2J");
-                    } catch (Exception e) {
-                    }
+                    InputHelper.readConfirm();
+                    player1Turn = true;
+                    System.out.print("\033[H\033[2J");
+
                 }
             }
 

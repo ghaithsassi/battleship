@@ -1,5 +1,7 @@
 package in205.ships;
 
-public enum Orientation {
+import java.io.Serializable;
+
+public enum Orientation implements Serializable{
     NORTH,SOUTH,EAST,WEST
 }

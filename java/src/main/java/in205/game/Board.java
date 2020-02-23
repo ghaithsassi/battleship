@@ -1,9 +1,13 @@
 package in205.game;
 
+import java.io.Serializable;
+
 import in205.game.exceptions.*;
 import in205.ships.*;
 
-class Board implements IBoard {
+class Board implements IBoard,Serializable{
+    
+    private static final long serialVersionUID = 1L;
     private String name;
     private int size;
     private ShipState[][] ships;

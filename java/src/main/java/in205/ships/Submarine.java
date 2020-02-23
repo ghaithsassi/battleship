@@ -3,7 +3,9 @@ package in205.ships;
  * Submarine
  */
 public class Submarine extends AbstractShip {
-    public Submarine(Orientation orientation){
+
+    private static final long serialVersionUID = 1L;
+    public Submarine(Orientation orientation) {
         super('S',"Submarine",orientation,3);
     }
     public Submarine(){

@@ -1,10 +1,13 @@
 package in205.game;
+import java.io.Serializable;
+
 import in205.game.exceptions.doubleStrikeException;
 import in205.ships.*;
 /**
  * ShipState
  */
-public class ShipState {
+public class ShipState implements Serializable{
+    private static final long serialVersionUID = 1L;
     private AbstractShip ship;
     private boolean struck = false;
     ShipState(){}

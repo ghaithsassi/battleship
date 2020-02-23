@@ -8,18 +8,20 @@ import java.util.Scanner;
 import in205.game.exceptions.outOfBoardException;
 import in205.ships.*;
 
-public class Game {
+public class Game implements Serializable{
+
+    private static final long serialVersionUID = 1L;
     /*
      * *** Constante
      */
-    public static final File SAVE_FILE = new File("savegame.dat");
+    public static File SAVE_FILE = new File("savegame.dat");
 
     /*
      * *** Attributs
      */
     protected Player player1;
     protected Player player2;
-    protected Scanner sin;
+    protected transient Scanner sin;
     /*
      * *** Constructeurs
      */
@@ -49,6 +51,17 @@ public class Game {
                 // place player ships
                 player1.putShips(); 
                 player2.putShips();
+                return this;
+        }else{
+            if (SAVE_FILE.exists()) {
+                try {
+                    ObjectInputStream ois =  new ObjectInputStream(new FileInputStream(SAVE_FILE));
+                    return (Game) ois.readObject();
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            
         }
         return this;
     }
@@ -105,34 +118,33 @@ public class Game {
 
     protected void save() {
 
-        /*
+        
         try {
-            // TODO bonus 2 : uncomment
-            // if (!SAVE_FILE.exists()) {
-            // SAVE_FILE.getAbsoluteFile().getParentFile().mkdirs();
-            // }
-
-            // TODO bonus 2 : serialize players
-
+            if (!SAVE_FILE.exists()) {
+            SAVE_FILE.getAbsoluteFile().getParentFile().mkdirs();
+            }
+            ObjectOutputStream oos =  new ObjectOutputStream(new FileOutputStream(SAVE_FILE));
+            oos.writeObject(this) ;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
+        
     }
 
-    protected boolean loadSave() {
-        /*
+    public static boolean loadSave() {
+        
         if (SAVE_FILE.exists()) {
             try {
-                // TODO bonus 2 : deserialize players
-
+                ObjectInputStream ois =  new ObjectInputStream(new FileInputStream(SAVE_FILE));
+                ois.readObject() ;
                 return true;
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
-        */
+
         return false;
+        
     
     }
 

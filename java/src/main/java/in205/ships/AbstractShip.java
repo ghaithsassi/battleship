@@ -1,9 +1,13 @@
 package in205.ships;
+
+import java.io.Serializable;
+
 /**
  * Abstractship is an abstract class to represent the ships
  */
-public abstract class AbstractShip{
+public abstract class AbstractShip implements Serializable{
 
+    private static final long serialVersionUID = 1L;
     protected Character label;
     protected String name;
     protected Integer size;

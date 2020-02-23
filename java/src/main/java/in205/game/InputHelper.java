@@ -84,4 +84,13 @@ public final class InputHelper {
 
         return res;
     }
+    public static void readConfirm(){
+        @SuppressWarnings("resource")
+        Scanner sin = new Scanner(System.in);
+        try {
+            String ok = sin.nextLine();
+        } catch (Exception e) {
+        }
+
+    }
 }
