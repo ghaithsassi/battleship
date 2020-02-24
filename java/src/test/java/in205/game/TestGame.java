@@ -1,8 +1,5 @@
 package in205.game;
 import java.util.Scanner;
-
-import org.junit.Test;
-
 /**
  * TestGame
  */
@@ -41,6 +38,7 @@ public class TestGame {
         }
         game=game.init();
         game.run();
+        sin.close();
 
     }
     private static void sleep(int ms) {
